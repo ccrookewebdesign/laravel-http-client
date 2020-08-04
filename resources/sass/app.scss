@@ -1,1 +1,29 @@
-//
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+@import 'variables';
+
+// @import '~bootstrap/scss/bootstrap';
+
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+* {
+    font-family: Nunito;
+}
+
+[v-cloak] {
+    display: none
+}
+
+/*
+ * Instructions
+ *
+ * Do NOT use this file for new classes, use main.scss or admin.scss
+ *
+ * Color codes should be referenced using :  config('colors.blue') which
+ * pulls from /tailwind.js configuration file
+ */
+
