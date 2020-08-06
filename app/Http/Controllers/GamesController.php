@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\Http;
 class GamesController extends Controller {
 
     public function index(){
+        /*
+            [
+                ['name' => 'Chair', 'price' => 100],
+                ['name' => 'Bookcase', 'price' => 150],
+                ['name' => 'Desk', 'price' => 200],
+            ]
+        */
+
         /*$client = new \GuzzleHttp\Client(['base_uri' => 'https://api-v3.igdb.com/']);
 
         $response = $client->request('POST', 'multiquery', [

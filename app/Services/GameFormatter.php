@@ -27,11 +27,12 @@ class GameFormatter {
     public function formatForView($games): array{
         return collect($games)->map(function($game){
             return collect($game)->merge([
-                'coverImageUrl' => Str::replaceFirst('thumb', 'cover_big', $game['cover']['url']),
+                'coverImageUrl' => (isset($game['cover']['url']) ? Str::replaceFirst('thumb', 'cover_big', $game['cover']['url']) : ''),
+                'thumbImageUrl' => (isset($game['cover']['url']) ? $game['cover']['url'] : 'https://via.placeholder.com/50x60'),
                 'rating'        => (isset($game['rating']) ? round($game['rating']) . '%' : 'NR'),
                 'criticRating'  => (isset($game['aggregated_rating']) ? round($game['aggregated_rating']) . '%' : 'NR'),
                 'platforms'     => implode(array_filter(collect($game['platforms'])->pluck('abbreviation')->toArray(), 'strlen'), ', '),
-                'releaseDate'   => Carbon::parse($game['first_release_date'])->format('M d, Y'),
+                'releaseDate'   => (isset($game['first_release_date']) ? Carbon::parse($game['first_release_date'])->format('M d, Y') : null),
                 'genres'        => (isset($game['genres']) ? implode(array_filter(collect($game['genres'])->pluck('name')->toArray(), 'strlen'), ', ') : ''),
                 'companies'     => (isset($game['involved_companies']) ? implode(array_filter(collect($game['involved_companies'])->pluck('company.name')->toArray(), 'strlen'), ', ') : ''),
                 'gameTrailer'   => (isset($game['videos']) ? 'https://youtube.com/watch/' . $game['videos'][0]['video_id'] : null),
