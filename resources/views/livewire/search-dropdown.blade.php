@@ -1,8 +1,21 @@
-<div class="relative">
+<div class="relative" x-data="{ isOpen: true }" @click.away="isOpen = false"
+     @keydown.window="
+                if (event.keyCode === 191) {
+                    event.preventDefault();
+                    $refs.search.focus();
+                }
+            ">
     <input wire:model.debounce.500ms="search"
            type="text"
            class="bg-gray-800 text-small rounded-full focus:outline-none focus:shadow-outline w-64 px-3 pl-8 py-1"
-           placeholder="Search ..."/>
+           placeholder="Search ..."
+           x-ref="search"
+
+           @focus="isOpen = true"
+           @keydown="isOpen = true"
+           @keydown.escape.window="isOpen = false"
+           @keydown.shift.tab="isOpen = false"/>
+
     <div class="absolute top-0 flex items-center h-full ml-2">
         <svg class="fill-current text-gray-400 w-4" viewBox="0 0 24 24">
             <path class="heroicon-ui"
@@ -13,12 +26,14 @@
     <div wire:loading class="spinner top-0 right-0 mr-4 mt-4" style="position: absolute"></div>
 
     @if(strlen(trim($search)))
-        <div class="absolute bg-gray-800 rounded w-64 mt-4 text-sm z-50">
+        <div class="absolute bg-gray-800 rounded w-64 mt-4 text-sm z-50"
+             x-show.transition.opacity="isOpen">
             <ul>
                 @forelse($searchResults as $game)
                     <li class="border-b border-gray-700">
                         <a href="{{ route('games.show', $game['slug']) }}"
-                           class="block hover:bg-gray-700 p-3 flex items-center">
+                           class="block hover:bg-gray-700 p-3 flex items-center"
+                           @if($loop->last) @keydown.tab="isOpen = false" @endif>
                             <img src="{{ $game['thumbImageUrl'] }}" class="w-10 h-12">
                             <span class="ml-4">{{ $game['name'] }}</span>
                         </a>

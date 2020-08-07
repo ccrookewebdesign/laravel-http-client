@@ -35,12 +35,12 @@ class GameFormatter {
                 'releaseDate'   => (isset($game['first_release_date']) ? Carbon::parse($game['first_release_date'])->format('M d, Y') : null),
                 'genres'        => (isset($game['genres']) ? implode(array_filter(collect($game['genres'])->pluck('name')->toArray(), 'strlen'), ', ') : ''),
                 'companies'     => (isset($game['involved_companies']) ? implode(array_filter(collect($game['involved_companies'])->pluck('company.name')->toArray(), 'strlen'), ', ') : ''),
-                'gameTrailer'   => (isset($game['videos']) ? 'https://youtube.com/watch/' . $game['videos'][0]['video_id'] : null),
+                'gameTrailer'   => (isset($game['videos']) ? 'https://youtube.com/embed/' . $game['videos'][0]['video_id'] : null),
                 'screenshots'   => isset($game['screenshots']) ?
                     collect($game['screenshots'])->map(function($screenshot){
                         return [
                             'big'  => Str::replaceFirst('thumb', 'screenshot_big', $screenshot['url']),
-                            'huge' => Str::replaceFirst('thumb', 'cover_huge', $screenshot['url']),
+                            'huge' => Str::replaceFirst('thumb', 'screenshot_huge', $screenshot['url']),
                         ];
                     })->take(9) : null,
                 'similarGames'  => isset($game['similar_games']) ?
@@ -66,10 +66,4 @@ class GameFormatter {
             ]);
         })->toArray();
     }
-//@if(isset($game['videos']))
-//                        <a href="https://youtube.com/watch/{{ $game['videos'][0]['video_id'] }}"
-    /*private function formatArrayToString(array $arrayToBeFormatted, string $key): string{
-        //dd($arrayToBeFormatted, $key);
-        return implode(array_filter(collect($arrayToBeFormatted)->pluck($key)->toArray(), 'strlen'), ', ');
-    }*/
 }

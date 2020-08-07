@@ -61,9 +61,8 @@ class GamesController extends Controller {
         abort_if(!$gameUnformatted, 404);
 
         $gameFormatter = new GameFormatter();
-        //$game = $gameFormatter->formatForView($gameUnformatted)[0];
 
-        //dd($game);
+        //dd($gameFormatter->formatForView($gameUnformatted)[0]);
 
         return view('show', [
             'game' => $gameFormatter->formatForView($gameUnformatted)[0],
