@@ -29,7 +29,6 @@ class SearchDropdown extends Component {
 
             $this->searchResults = $gameFormatter->formatForView($searchResultsUnformatted);
 
-            //dump($this->searchResults);
         }
 
         return view('livewire.search-dropdown');
