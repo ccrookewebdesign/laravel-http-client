@@ -6,24 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 class GameFormatter {
-
-    /*public function formatForView($games): array{
-        return collect($games)->map(function($game){
-            return collect($game)->merge([
-                'coverImageUrl' => Str::replaceFirst('thumb', 'cover_big', $game['cover']['url']),
-                'rating'        => (isset($game['rating']) ? round($game['rating']) . '%' : 'NR'),
-                'platforms'     => implode(array_filter(collect($game['platforms'])->pluck('abbreviation')->toArray(), 'strlen'), ', '),
-                'releaseDate'   => Carbon::parse($game['first_release_date'])->format('M d, Y'),
-                'genres' => (isset($game['genres']) ? $this->formatGenres($game['genres']) : ''),
-                //'companies' => (isset($game['involved_companies']) ? $this->formatGenres($game['involved_companies']) : ''),
-            ]);
-        })->toArray();
-    }
-
-    private function formatGenres($genres): string{
-        return implode(array_filter(collect($genres)->pluck('name')->toArray(), 'strlen'), ', ');
-    }*/
-
     public function formatForView($games): array{
         return collect($games)->map(function($game){
             return collect($game)->merge([
