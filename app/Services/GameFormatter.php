@@ -11,8 +11,8 @@ class GameFormatter {
             return collect($game)->merge([
                 'coverImageUrl' => (isset($game['cover']['url']) ? Str::replaceFirst('thumb', 'cover_big', $game['cover']['url']) : ''),
                 'thumbImageUrl' => (isset($game['cover']['url']) ? $game['cover']['url'] : 'https://via.placeholder.com/50x60'),
-                'rating'        => (isset($game['rating']) ? round($game['rating']) . '%' : 'NR'),
-                'criticRating'  => (isset($game['aggregated_rating']) ? round($game['aggregated_rating']) . '%' : 'NR'),
+                'rating'        => (isset($game['rating']) ? round($game['rating']) : 0),
+                'criticRating'  => (isset($game['aggregated_rating']) ? round($game['aggregated_rating']) : 0),
                 'platforms'     => implode(array_filter(collect($game['platforms'])->pluck('abbreviation')->toArray(), 'strlen'), ', '),
                 'releaseDate'   => (isset($game['first_release_date']) ? Carbon::parse($game['first_release_date'])->format('M d, Y') : null),
                 'genres'        => (isset($game['genres']) ? implode(array_filter(collect($game['genres'])->pluck('name')->toArray(), 'strlen'), ', ') : ''),
@@ -29,7 +29,7 @@ class GameFormatter {
                     collect($game['similar_games'])->map(function($game){
                     return collect($game)->merge([
                         'coverImageUrl' => array_key_exists('cover', $game) ? Str::replaceFirst('thumb', 'cover_big', $game['cover']['url']) : 'https://via.placeholder.com/264x352',
-                        'rating'        => (isset($game['rating']) ? round($game['rating']) . '%' : 'NR'),
+                        'rating'        => (isset($game['rating']) ? round($game['rating']) : 0 ),
                         'platforms'     => isset($game['platforms']) ? implode(array_filter(collect($game['platforms'])->pluck('abbreviation')->toArray(), 'strlen'), ', ') : null,
                     ]);
                 })->take(6) : null,

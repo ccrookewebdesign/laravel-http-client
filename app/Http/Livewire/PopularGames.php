@@ -36,6 +36,8 @@ class PopularGames extends Component {
         $gameFormatter = new GameFormatter();
 
         $this->popularGames = $gameFormatter->formatForView($popularGamesUnformatted);
+
+        //dump($popularGamesUnformatted, $this->popularGames);
     }
 
     public function render(){

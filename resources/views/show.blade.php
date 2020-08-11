@@ -20,18 +20,26 @@
 
                 <div class="flex flex-wrap items-center mt-8">
                     <div class="flex items-center">
-                        <div class="w-16 h-16 bg-gray-800 rounded-full">
-                            <div class="font-semibold text-xs flex justify-center items-center h-full">
-                                {{ $game['rating'] }}
-                            </div>
+                        <div id="memberRating" class="w-16 h-16 bg-gray-800 rounded-full relative text-xs font-semibold">
+                            @push('scripts')
+                                @include('partials._rating', [
+                                  'slug' => 'memberRating',
+                                  'rating' => $game['rating'],
+                                  'event' => null,
+                                ])
+                            @endpush
                         </div>
                         <div class="ml-4 text-xs">Member<br>Score</div>
                     </div>
                     <div class="flex items-center ml-12">
-                        <div class="w-16 h-16 bg-gray-800 rounded-full">
-                            <div class="font-semibold text-xs flex justify-center items-center h-full">
-                                {{ $game['criticRating'] }}
-                            </div>
+                        <div id="criticRating" class="w-16 h-16 bg-gray-800 rounded-full relative text-xs font-semibold">
+                            @push('scripts')
+                                @include('partials._rating', [
+                                  'slug' => 'criticRating',
+                                  'rating' => $game['criticRating'],
+                                  'event' => null,
+                                ])
+                            @endpush
                         </div>
                         <div class="ml-4 text-xs">Critic <br>Score</div>
                     </div>
@@ -129,7 +137,7 @@
 
         @if($game['screenshots'])
             <div class="images-container border-b border-gray-800 pb-12 mt-8" x-data="{ isOpen: false, image: '' }">
-                <h2 class="text-blue-500 uppercase tracking-wide font-semibold">Images</h2>
+                <h2 class="text-blue uppercase tracking-wide font-semibold">Images</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mt-8">
                     @foreach($game['screenshots'] as $screenshot)
                         <div @click="
@@ -161,7 +169,7 @@
         @endif
 
         <div class="similar-games-container mt-8">
-            <h2 class="text-blue-500 uppercase tracking-wide font-semibold">Similar Games</h2>
+            <h2 class="text-blue uppercase tracking-wide font-semibold">Similar Games</h2>
             <div class="similar-games text-sm grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-6 gap-12">
                 @foreach($game['similarGames'] as $game)
                     <x-game-card :game="$game"/>
