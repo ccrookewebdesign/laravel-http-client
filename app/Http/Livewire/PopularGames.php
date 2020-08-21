@@ -37,20 +37,17 @@ class PopularGames extends Component {
 
         $this->popularGames = $gameFormatter->formatForView($popularGamesUnformatted);
 
-        //dump($popularGamesUnformatted, $this->popularGames);
+        collect($this->popularGames)->filter(function ($game) {
+            return $game['rating'];
+        })->each(function ($game) {
+            $this->emit('gameWithRatingAdded', [
+                'slug' => $game['slug'],
+                'rating' => $game['rating'] / 100
+            ]);
+        });
     }
 
     public function render(){
         return view('livewire.popular-games');
     }
-
-    /*private function formatForView($games){
-        return collect($games)->map(function($game){
-            return collect($game)->merge([
-                'coverImageUrl' => Str::replaceFirst('thumb', 'cover_big', $game['cover']['url']),
-                'rating'        => isset($game['rating']) ? round($game['rating']) . '%' : 'NR',
-                'platforms' => implode(array_filter(collect($game['platforms'])->pluck('abbreviation')->toArray(),'strlen'), ', '),
-            ]);
-        })->toArray();
-    }*/
 }

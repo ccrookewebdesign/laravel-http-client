@@ -37,19 +37,18 @@ class RecentlyReviewed extends Component {
         $gameFormatter = new GameFormatter();
 
         $this->recentlyReviewed = $gameFormatter->formatForView($recentlyReviewedUnformatted);
+
+        collect($this->recentlyReviewed)->filter(function ($game) {
+            return $game['rating'];
+        })->each(function ($game) {
+            $this->emit('reviewGameWithRatingAdded' . $game['slug'], [
+                'slug' => 'review_' . $game['slug'],
+                'rating' => $game['rating'] / 100
+            ]);
+        });
     }
 
     public function render(){
         return view('livewire.recently-reviewed');
     }
-
-    /*private function formatForView($games){
-        return collect($games)->map(function($game){
-            return collect($game)->merge([
-                'coverImageUrl' => Str::replaceFirst('thumb', 'cover_big', $game['cover']['url']),
-                'rating'        => isset($game['rating']) ? round($game['rating']) . '%' : 'NR',
-                'platforms'     => implode(array_filter(collect($game['platforms'])->pluck('abbreviation')->toArray(), 'strlen'), ', '),
-            ]);
-        })->toArray();
-    }*/
 }

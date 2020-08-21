@@ -42,8 +42,10 @@
         </div>
     </footer>
 </div>
+
+
+<livewire:scripts />
 <script src="{{ asset('js/app.js') }}"></script>
 @stack('scripts')
-<livewire:scripts />
 </body>
 </html>

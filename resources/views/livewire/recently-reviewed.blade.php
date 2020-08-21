@@ -6,18 +6,9 @@
                     <img src="{{ $game['coverImageUrl'] }}" alt="game image"
                          class="w-48 hover:opacity-75 transition ease-in-out duration-150">
                 </a>
-                <div id="{{ $game['slug'] }}" class="absolute bottom-0 right-0 w-16 h-16 bg-gray-900 rounded-full -right-20 -bottom-20"
+                <div id="{{ 'review_' . $game['slug'] }}" class="absolute bottom-0 right-0 w-16 h-16 bg-gray-900 rounded-full -right-20 -bottom-20"
                      style="right: -20px; bottom: -20px;">
-                    {{--<div class="font-semibold text-xs flex justify-center items-center h-full">
-                        {{ $game['rating'] }}
-                    </div>--}}
-                    @push('scripts')
-                        @include('partials._rating', [
-                          'slug' => $game['slug'],
-                          'rating' => $game['rating'],
-                          'event' => null,
-                        ])
-                    @endpush
+                        @include('partials._rating', ['event' => 'reviewGameWithRatingAdded' . $game['slug']])
                 </div>
             </div>
             <div class="ml-12">
