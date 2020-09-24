@@ -7,7 +7,7 @@ RUN composer install --no-scripts --ansi --no-interaction
 
 FROM node:12.12 as frontend
 RUN mkdir -p /app/public
-COPY package.json webpack.mix.js  /app/
+COPY package.json webpack.mix.js tailwind.config.js  /app/
 COPY resources/ /app/resources/
 WORKDIR /app
 RUN npm install && npm run production

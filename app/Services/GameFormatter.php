@@ -13,7 +13,7 @@ class GameFormatter {
                 'thumbImageUrl' => (isset($game['cover']['url']) ? $game['cover']['url'] : 'https://via.placeholder.com/50x60'),
                 'rating'        => (isset($game['rating']) ? round($game['rating']) : 0),
                 'criticRating'  => (isset($game['aggregated_rating']) ? round($game['aggregated_rating']) : 0),
-                'platforms'     => implode(array_filter(collect($game['platforms'])->pluck('abbreviation')->toArray(), 'strlen'), ', '),
+                'platforms'     => (isset($game['platforms']) ? implode(array_filter(collect($game['platforms'])->pluck('abbreviation')->toArray(), 'strlen'), ', ') : null),
                 'releaseDate'   => (isset($game['first_release_date']) ? Carbon::parse($game['first_release_date'])->format('M d, Y') : null),
                 'genres'        => (isset($game['genres']) ? implode(array_filter(collect($game['genres'])->pluck('name')->toArray(), 'strlen'), ', ') : ''),
                 'companies'     => (isset($game['involved_companies']) ? implode(array_filter(collect($game['involved_companies'])->pluck('company.name')->toArray(), 'strlen'), ', ') : ''),
